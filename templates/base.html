@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Shop{% endblock %}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; }
+        nav { background: #1a1a2e; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: #eee; text-decoration: none; margin-right: 1.5rem; font-weight: 500; }
+        nav a:hover { color: #e94560; }
+        .cart-badge { background: #e94560; color: #fff; border-radius: 50%; padding: 0.1rem 0.5rem; font-size: 0.8rem; margin-left: 0.3rem; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+        .product-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); transition: transform 0.2s; }
+        .product-card:hover { transform: translateY(-4px); }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; }
+        .product-card .info { padding: 1rem; }
+        .product-card .info h3 { margin-bottom: 0.5rem; }
+        .product-card .info .price { font-size: 1.3rem; font-weight: bold; color: #e94560; }
+        .btn { display: inline-block; padding: 0.5rem 1.2rem; border-radius: 6px; text-decoration: none; border: none; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #e94560; color: #fff; }
+        .btn-primary:hover { background: #d63850; }
+        .btn-outline { background: transparent; border: 1px solid #e94560; color: #e94560; }
+        .btn-outline:hover { background: #e94560; color: #fff; }
+        .sidebar { background: #fff; border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .sidebar h3 { margin-bottom: 0.8rem; }
+        .sidebar ul { list-style: none; }
+        .sidebar ul li { margin-bottom: 0.4rem; }
+        .sidebar ul li a { color: #555; text-decoration: none; }
+        .sidebar ul li a:hover { color: #e94560; }
+        .detail { display: flex; gap: 2rem; background: #fff; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .detail img { max-width: 400px; border-radius: 10px; }
+        .detail .info { flex: 1; }
+        .detail .info h1 { margin-bottom: 0.5rem; }
+        .detail .info .price { font-size: 2rem; font-weight: bold; color: #e94560; margin: 1rem 0; }
+        .detail .info p { color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
+        .detail .info label { display: block; margin-bottom: 0.4rem; font-weight: 500; }
+        .detail .info select { padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 6px; }
+        .cart-table { width: 100%; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .cart-table th, .cart-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #eee; }
+        .cart-table th { background: #1a1a2e; color: #eee; }
+        .cart-total { text-align: right; font-size: 1.3rem; margin-top: 1rem; }
+        .empty-cart { text-align: center; padding: 3rem; color: #888; }
+        .flash { background: #d4edda; color: #155724; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div>
+            <a href="{% url 'shop:product_list' %}">Home</a>
+            {% for c in categories %}
+                <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+            {% endfor %}
+        </div>
+        <div>
+            <a href="{% url 'cart:cart_detail' %}">
+                Cart
+                <span class="cart-badge">{{ cart_total_items }}</span>
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
